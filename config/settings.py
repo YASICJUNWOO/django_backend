@@ -30,10 +30,11 @@ import os
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
-secret_file = os.path.join(BASE_DIR, 'key.json')
+secret_file = os.path.join(BASE_DIR, "key.json")
 
 with open(secret_file) as f:
     secrets = json.loads(f.read())
+
 
 def get_secret(setting, secrets=secrets):
     try:
@@ -41,6 +42,7 @@ def get_secret(setting, secrets=secrets):
     except KeyError:
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
+
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
@@ -51,9 +53,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-CUSTOM_APPS = [
-    "house.apps.HouseConfig",
-    ]
+CUSTOM_APPS = ["house.apps.HouseConfig", "users.apps.UsersConfig"]
 
 SYSTEM_APPS = [
     "django.contrib.admin",
@@ -148,3 +148,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Auth
+
+AUTH_USER_MODEL = "users.User"
